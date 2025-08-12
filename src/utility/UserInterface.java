@@ -6,20 +6,49 @@ public class UserInterface {
     Scanner scanner = new Scanner(System.in);
 
     public Double getPropertyValue() {
-        System.out.print("Enter the property value: ");
-        double propertyValue = Double.parseDouble(scanner.nextLine());
+        double propertyValue;
+        do {
+            System.out.print("Enter the property value: ");
+            propertyValue = Double.parseDouble(scanner.nextLine());
+            if (propertyValue < 0.00) {
+                System.out.println("\u001B[31mThe value can't be negative! Try again.\u001B[0m");
+            } else if (propertyValue < 30000.00) {
+                System.out.println("\u001B[31mThe value can't be too low! Try again.\u001B[0m");
+            } else if (propertyValue > 60000000.00) {
+                System.out.println("\u001B[31mThe value can't be too high! Try again.\u001B[0m");
+            }
+        } while (propertyValue < 30000.00 || propertyValue > 60000000.00);
         return propertyValue;
     }
 
     public Integer getFinancingTerm() {
-        System.out.print("Enter the financing term: ");
-        int financingTerm = Integer.parseInt(scanner.nextLine());
+        int financingTerm;
+        do {
+            System.out.print("Enter the financing term: ");
+            financingTerm = Integer.parseInt(scanner.nextLine());
+            if (financingTerm < 0) {
+                System.out.println("\u001B[31mThe value can't be negative! Try again.\u001B[0m");
+            } else if (financingTerm < 5) {
+                System.out.println("\u001B[31mThe value can't be too low! Try again.\u001B[0m");
+            } else if (financingTerm > 50) {
+                System.out.println("\u001B[31mThe value can't be too high! Try again.\u001B[0m");
+            }
+        } while (financingTerm < 5 || financingTerm > 50);
         return financingTerm;
     }
 
     public Double getAnnualInterestRate() {
-        System.out.print("Enter the annual interest rate: ");
-        double annualInterestRate = Double.parseDouble(scanner.nextLine());
+        double annualInterestRate;
+        do {
+            System.out.print("Enter the annual interest rate: ");
+            annualInterestRate = Double.parseDouble(scanner.nextLine());
+            if (annualInterestRate < 0.00) {
+                System.out.println("\u001B[31mThe value can't be negative! Try again.\u001B[0m");
+            }
+            if (annualInterestRate > 100.00) {
+                System.out.println("\u001B[31mThe value can't be too high! Try again.\u001B[0m");
+            }
+        } while (annualInterestRate < 0.00 || annualInterestRate > 100.00);
         return annualInterestRate;
     }
 }
