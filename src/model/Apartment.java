@@ -1,12 +1,33 @@
 package model;
 
 public class Apartment extends Financing{
+    private Integer parkingSpaces;
+    private Integer floorLevel;
+
     public Apartment() {
         super();
     }
 
-    public Apartment(Double propertyValue, Integer financingTerm, Double annualInterestRate) {
+    public Apartment(Double propertyValue, Integer financingTerm, Double annualInterestRate, Integer parkingSpaces, Integer floorLevel) {
         super(propertyValue, financingTerm, annualInterestRate);
+        this.parkingSpaces = parkingSpaces;
+        this.floorLevel = floorLevel;
+    }
+
+    public Integer getParkingSpaces() {
+        return parkingSpaces;
+    }
+
+    public void setParkingSpaces(Integer parkingSpaces) {
+        this.parkingSpaces = parkingSpaces;
+    }
+
+    public Integer getFloorLevel() {
+        return floorLevel;
+    }
+
+    public void setFloorLevel(Integer floorLevel) {
+        this.floorLevel = floorLevel;
     }
 
     @Override

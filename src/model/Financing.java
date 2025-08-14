@@ -1,6 +1,6 @@
 package model;
 
-public class Financing {
+public abstract class Financing {
     protected Double propertyValue;
     protected Integer financingTerm;
     protected Double annualInterestRate;
