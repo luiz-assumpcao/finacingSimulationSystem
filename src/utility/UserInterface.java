@@ -44,7 +44,7 @@ public class UserInterface {
     public Double getAnnualInterestRate() {
         double annualInterestRate;
         do {
-            System.out.print("Enter the annual interest rate: ");
+            System.out.print("Enter the annual interest rate (%): ");
             annualInterestRate = Double.parseDouble(scanner.nextLine());
             if (annualInterestRate < 0.00) {
                 printError("The value can't be negative! Try again.");

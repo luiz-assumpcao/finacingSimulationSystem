@@ -1,11 +1,17 @@
 package model;
 
 public class Financing {
-    private Double propertyValue;
-    private Integer financingTerm;
-    private Double annualInterestRate;
+    protected Double propertyValue;
+    protected Integer financingTerm;
+    protected Double annualInterestRate;
 
     public Financing() {
+    }
+
+    public Financing(Double propertyValue, Integer financingTerm, Double annualInterestRate) {
+        this.propertyValue = propertyValue;
+        this.financingTerm = financingTerm;
+        this.annualInterestRate = annualInterestRate;
     }
 
     public Double getPropertyValue() {
@@ -32,14 +38,10 @@ public class Financing {
         this.annualInterestRate = annualInterestRate;
     }
 
-    public Financing(Double propertyValue, Integer financingTerm, Double annualInterestRate) {
-        this.propertyValue = propertyValue;
-        this.financingTerm = financingTerm;
-        this.annualInterestRate = annualInterestRate;
-    }
-
     public Double calculateMonthlyPayment() {
-        return (this.propertyValue / (this.financingTerm * 12)) * (1 + (this.annualInterestRate / 12));
+        double monthlyInterestRate = (this.annualInterestRate / 100) / 12;
+        double financingTermInMonths = this.financingTerm * 12.00;
+        return (this.propertyValue / financingTermInMonths) * (1 + (monthlyInterestRate));
     }
 
     public Double calculateTotalPayment() {
