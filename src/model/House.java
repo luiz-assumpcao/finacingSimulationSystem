@@ -1,6 +1,6 @@
 package model;
 
-public class House extends Financing{
+public class House extends Financing {
     private Double landArea;
     private Double builtArea;
 
@@ -33,5 +33,15 @@ public class House extends Financing{
     @Override
     public Double calculateMonthlyPayment() {
         return super.calculateMonthlyPayment() + 80.00;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder string = new StringBuilder();
+        string.append(" | House: ").append("\n");
+        string.append(super.toString()).append("\n");
+        string.append("Land Area: ").append(String.format("%.2f m²", this.landArea)).append("\n");
+        string.append("Built Area: ").append(String.format("%.2f m²", this.builtArea)).append("\n");
+        return string.toString();
     }
 }

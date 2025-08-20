@@ -27,7 +27,7 @@ public class Main {
         financingsList.add(new Land(propertyValue, financingTerm, annualInterestRate, zoneType));
 
         for (Financing financing : financingsList) {
-            System.out.println(financing.calculateMonthlyPayment());
+            System.out.println(financing);
         }
 
     }

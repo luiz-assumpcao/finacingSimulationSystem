@@ -37,4 +37,14 @@ public class Apartment extends Financing{
         return (this.propertyValue * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, financingTermInMonths)) /
                 (Math.pow(1 + monthlyInterestRate, financingTermInMonths) - 1);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder string = new StringBuilder();
+        string.append(" | Apartment: ").append("\n");
+        string.append(super.toString()).append("\n");
+        string.append("Parking Spaces: ").append(String.format("%d ", this.parkingSpaces)).append("\n");
+        string.append("Floor Level: ").append(String.format("%d ", this.floorLevel)).append("\n");
+        return string.toString();
+    }
 }
