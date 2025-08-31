@@ -20,7 +20,7 @@ public class Main {
         double annualInterestRate = userInterface.getAnnualInterestRate();
         String zoneType = userInterface.getZoneType();
 
-        financingsList.add(new House(500000.00, 10, 10.00, 300.00, 200.00));
+        financingsList.add(new House(500000.00, 5, 1.00, 300.00, 200.00));
         financingsList.add(new House(720000.00, 30, 7.8,400.00,270.00));
         financingsList.add(new Apartment(500000.00, 10, 10.00, 1, 5));
         financingsList.add(new Apartment(720000.00, 30, 7.8, 2, 11));
@@ -29,6 +29,7 @@ public class Main {
         for (Financing financing : financingsList) {
             System.out.println(financing);
         }
+
 
     }
 }

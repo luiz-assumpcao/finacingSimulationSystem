@@ -1,5 +1,7 @@
 package model;
 
+import utility.IncreaseGreaterThanInterestException;
+
 public class House extends Financing {
     private Double landArea;
     private Double builtArea;
@@ -30,9 +32,27 @@ public class House extends Financing {
         this.builtArea = builtArea;
     }
 
+    public void isIncreaseGreaterThanInterest(double valueOfTheIncrease, double interestValue) throws IncreaseGreaterThanInterestException {
+        if (valueOfTheIncrease > interestValue) {
+            throw new IncreaseGreaterThanInterestException("The value of the increase is greater than the interest");
+        }
+    }
+
     @Override
     public Double calculateMonthlyPayment() {
-        return super.calculateMonthlyPayment() + 80.00;
+        double monthlyInterestRate = (this.annualInterestRate / 100) / 12;
+        double financingTermInMonths = this.financingTerm * 12.00;
+
+        double interestValue = (this.propertyValue / financingTermInMonths) * (1 + (monthlyInterestRate)) - (this.propertyValue / financingTermInMonths);
+        double valueOfTheIncrease = 80;
+
+        try {
+            isIncreaseGreaterThanInterest(valueOfTheIncrease, interestValue);
+        } catch (IncreaseGreaterThanInterestException e) {
+            interestValue = valueOfTheIncrease;
+        }
+
+        return (this.propertyValue / financingTermInMonths) * (1 + (monthlyInterestRate)) + valueOfTheIncrease;
     }
 
     @Override
