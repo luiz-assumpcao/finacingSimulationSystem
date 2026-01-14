@@ -28,7 +28,7 @@ public class Land extends Financing{
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder();
-        string.append(" | Land: ").append("\n");
+        string.append("| Land |").append("\n");
         string.append(super.toString()).append("\n");
         string.append("Zone Type: ").append(String.format("%s.", this.zoneType)).append("\n");
         return string.toString();

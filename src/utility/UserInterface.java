@@ -5,8 +5,16 @@ import java.util.Scanner;
 public class UserInterface {
     Scanner scanner = new Scanner(System.in);
 
-    private void printError(String message) {
+    private static void printError(String message) {
         System.out.println("\u001B[31m" + message + "\u001B[0m");
+    }
+
+    private static void printGreenLine() {
+        System.out.println("\u001B[32m---------------------------------------------\u001B[0m");
+    }
+
+    private static void printBlueText(String text) {
+        System.out.println("\u001B[36m" + text + "\u001B[0m");
     }
 
     public Double getPropertyValue() {
@@ -168,4 +176,34 @@ public class UserInterface {
             }
         }
     }
+
+    public void displayOptionsMenu() {
+        printGreenLine();
+        printBlueText("| Financing Calculator |");
+        printGreenLine();
+        printBlueText("(1) House");
+        printBlueText("(2) Apartment");
+        printBlueText("(3) Land");
+        printBlueText("(0) Quit Program");
+        printGreenLine();
+        System.out.print("\u001B[36mChoose an option: \u001B[0m");
+    }
+
+    public Integer getUserFinancingOption() {
+        while (true) {
+            try {
+                int userOption = Integer.parseInt(scanner.nextLine());
+                if (userOption < 0 || userOption > 3) {
+                    printError("This option is not available! Try again.");
+                    displayOptionsMenu();
+                    continue;
+                }
+                return userOption;
+            } catch (NumberFormatException e) {
+                printError("Invalid value entered! Please try again.");
+                displayOptionsMenu();
+            }
+        }
+    }
+
 }

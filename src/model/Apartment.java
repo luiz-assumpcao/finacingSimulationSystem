@@ -41,7 +41,7 @@ public class Apartment extends Financing{
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder();
-        string.append(" | Apartment: ").append("\n");
+        string.append("| Apartment |").append("\n");
         string.append(super.toString()).append("\n");
         string.append("Parking Spaces: ").append(String.format("%d ", this.parkingSpaces)).append("\n");
         string.append("Floor Level: ").append(String.format("%d ", this.floorLevel)).append("\n");
