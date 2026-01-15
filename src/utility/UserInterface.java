@@ -1,9 +1,14 @@
 package utility;
 
+import model.Apartment;
+import model.House;
+import model.Land;
+
 import java.util.Scanner;
 
 public class UserInterface {
     Scanner scanner = new Scanner(System.in);
+
 
     private static void printError(String message) {
         System.out.println("\u001B[31m" + message + "\u001B[0m");
@@ -204,6 +209,46 @@ public class UserInterface {
                 displayOptionsMenu();
             }
         }
+    }
+
+    public Apartment createApartmentFinancing() {
+        double propertyValue = getPropertyValue();
+        int financingTerm = getFinancingTerm();
+        double annualInterestRate = getAnnualInterestRate();
+        int parkingSpaces = getParkingSpaces();
+        int floorLevel = getFloorLevel();
+
+        return new Apartment(propertyValue,
+                            financingTerm,
+                            annualInterestRate,
+                            parkingSpaces,
+                            floorLevel);
+    }
+
+    public House createHouseFinancing() {
+        double propertyValue = getPropertyValue();
+        int financingTerm = getFinancingTerm();
+        double annualInterestRate = getAnnualInterestRate();
+        double landArea = getLandArea();
+        double builtArea = getBuiltArea(landArea);
+
+        return new House(propertyValue,
+                financingTerm,
+                annualInterestRate,
+                landArea,
+                builtArea);
+    }
+
+    public Land createLandApartment() {
+        double propertyValue = getPropertyValue();
+        int financingTerm = getFinancingTerm();
+        double annualInterestRate = getAnnualInterestRate();
+        String zoneType = getZoneType();
+
+        return new Land(propertyValue,
+                financingTerm,
+                annualInterestRate,
+                zoneType);
     }
 
 }
