@@ -18,7 +18,15 @@ public class UserInterface {
     }
 
     public void printBlueText(String text) {
-        System.out.println("\u001B[36m" + text + "\u001B[0m");
+        printBlueText(text, false);
+    }
+
+    public void printBlueText(String text, boolean breakLine) {
+        if (breakLine) {
+            System.out.println("\u001B[36m" + text + "\u001B[0m");
+        } else {
+            System.out.print("\u001B[36m" + text + "\u001B[0m");
+        }
     }
 
     public Double getPropertyValue() {
