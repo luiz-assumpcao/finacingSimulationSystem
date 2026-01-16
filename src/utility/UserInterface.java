@@ -32,7 +32,7 @@ public class UserInterface {
     public Double getPropertyValue() {
         while (true) {
             try {
-                System.out.print("Enter the property value: ");
+                printBlueText("Enter the property value: ");
                 double propertyValue = Double.parseDouble(scanner.nextLine());
                 if (propertyValue < 0.00) {
                     printError("The value can't be negative! Try again.");
@@ -54,7 +54,7 @@ public class UserInterface {
     public Integer getFinancingTerm() {
         while (true) {
             try {
-                System.out.print("Enter the financing term: ");
+                printBlueText("Enter the financing term: ");
                 int financingTerm = Integer.parseInt(scanner.nextLine());
                 if (financingTerm < 0) {
                     printError("The value can't be negative! Try again.");
@@ -76,7 +76,7 @@ public class UserInterface {
     public Double getAnnualInterestRate() {
         while (true) {
             try {
-                System.out.print("Enter the annual interest rate (%): ");
+                printBlueText("Enter the annual interest rate (%): ");
                 double annualInterestRate = Double.parseDouble(scanner.nextLine());
                 if (annualInterestRate < 0.00) {
                     printError("The value can't be negative! Try again.");
@@ -95,7 +95,7 @@ public class UserInterface {
     public Double getLandArea() {
         while (true) {
             try {
-                System.out.print("Enter the land area (m²): ");
+                printBlueText("Enter the land area (m²): ");
                 double landArea = Double.parseDouble(scanner.nextLine());
                 if (landArea < 0.00) {
                     printError("The value can't be negative! Try again.");
@@ -117,7 +117,7 @@ public class UserInterface {
     public Double getBuiltArea(double landArea) {
         while (true) {
             try {
-                System.out.print("Enter the built area (m²): ");
+                printBlueText("Enter the built area (m²): ");
                 double builtArea = Double.parseDouble(scanner.nextLine());
                 if (builtArea < 0.00) {
                     printError("The value can't be negative! Try again.");
@@ -139,7 +139,7 @@ public class UserInterface {
     public Integer getParkingSpaces() {
         while (true) {
             try {
-                System.out.print("Enter the number of parking spaces: ");
+                printBlueText("Enter the number of parking spaces: ");
                 int parkingSpaces = Integer.parseInt(scanner.nextLine());
                 if (parkingSpaces < 0) {
                     printError("The value can't be negative! Try again.");
@@ -158,7 +158,7 @@ public class UserInterface {
     public Integer getFloorLevel() {
         while (true) {
             try {
-                System.out.print("Enter the the floor level: ");
+                printBlueText("Enter the the floor level: ");
                 int floorLevel = Integer.parseInt(scanner.nextLine());
                 if (floorLevel < 0) {
                     printError("The value can't be negative! Try again.");
@@ -177,7 +177,7 @@ public class UserInterface {
     public String getZoneType() {
         while (true) {
             try {
-                System.out.print("Enter the the zone type: ");
+                printBlueText("Enter the the zone type: ");
                 String zoneType = scanner.nextLine().strip();
                 if (zoneType.isEmpty() || !zoneType.matches("[\\p{L}]+")) {
                     throw new InvalidZoneEntryException("Invalid zone entered");
@@ -191,14 +191,14 @@ public class UserInterface {
 
     public void displayOptionsMenu() {
         printGreenLine();
-        printBlueText("| Financing Calculator |");
+        printBlueText("| Financing Calculator |", true);
         printGreenLine();
-        printBlueText("(1) House");
-        printBlueText("(2) Apartment");
-        printBlueText("(3) Land");
-        printBlueText("(0) Exit");
+        printBlueText("(1) House", true);
+        printBlueText("(2) Apartment", true);
+        printBlueText("(3) Land", true);
+        printBlueText("(0) Exit", true);
         printGreenLine();
-        System.out.print("\u001B[36mChoose an option: \u001B[0m");
+        printBlueText("Choose an option: ");
     }
 
     public Integer getUserFinancingOption() {
@@ -224,6 +224,7 @@ public class UserInterface {
         double annualInterestRate = getAnnualInterestRate();
         int parkingSpaces = getParkingSpaces();
         int floorLevel = getFloorLevel();
+        printGreenLine();
 
         return new Apartment(propertyValue,
                             financingTerm,
@@ -238,6 +239,7 @@ public class UserInterface {
         double annualInterestRate = getAnnualInterestRate();
         double landArea = getLandArea();
         double builtArea = getBuiltArea(landArea);
+        printGreenLine();
 
         return new House(propertyValue,
                 financingTerm,
@@ -251,6 +253,7 @@ public class UserInterface {
         int financingTerm = getFinancingTerm();
         double annualInterestRate = getAnnualInterestRate();
         String zoneType = getZoneType();
+        printGreenLine();
 
         return new Land(propertyValue,
                 financingTerm,

@@ -30,7 +30,7 @@ public class Land extends Financing{
         StringBuilder string = new StringBuilder();
         string.append("| Land |").append("\n");
         string.append(super.toString()).append("\n");
-        string.append("Zone Type: ").append(String.format("%s.", this.zoneType)).append("\n");
+        string.append("Zone Type: ").append(String.format("%s.", this.zoneType));
         return string.toString();
     }
 }

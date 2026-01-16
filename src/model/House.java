@@ -61,7 +61,7 @@ public class House extends Financing {
         string.append("| House |").append("\n");
         string.append(super.toString()).append("\n");
         string.append("Land Area: ").append(String.format("%.2f m²", this.landArea)).append("\n");
-        string.append("Built Area: ").append(String.format("%.2f m²", this.builtArea)).append("\n");
+        string.append("Built Area: ").append(String.format("%.2f m²", this.builtArea));
         return string.toString();
     }
 }
