@@ -6,29 +6,32 @@ import model.House;
 import model.Land;
 import utility.UserInterface;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         UserInterface userInterface = new UserInterface();
 
-        List<Financing> financingsList = new ArrayList<>();
+        boolean exit = false;
+        while (!exit) {
+            userInterface.displayOptionsMenu();
+            int userOption = userInterface.getUserFinancingOption();
 
-        userInterface.displayOptionsMenu();
-        int userOption = userInterface.getUserFinancingOption();
+            userInterface.printGreenLine();
+            if (userOption == 0) {
+                exit = true;
+                continue;
+            } else if (userOption == 1) {
+                House house = userInterface.createHouseFinancing();
+                System.out.println(house);
+            } else if (userOption == 2) {
+                Apartment apartment = userInterface.createApartmentFinancing();
+                System.out.println(apartment);
+            } else if (userOption == 3) {
+                Land land = userInterface.createLandApartment();
+                System.out.println(land);
+            }
 
-        double propertyValue = userInterface.getPropertyValue();
-        int financingTerm = userInterface.getFinancingTerm();
-        double annualInterestRate = userInterface.getAnnualInterestRate();
-        String zoneType = userInterface.getZoneType();
-
-        financingsList.add(new Land(propertyValue, financingTerm, annualInterestRate, zoneType));
-
-        for (Financing financing : financingsList) {
-            System.out.println(financing);
         }
-
 
     }
 }

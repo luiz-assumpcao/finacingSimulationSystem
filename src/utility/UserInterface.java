@@ -9,16 +9,15 @@ import java.util.Scanner;
 public class UserInterface {
     Scanner scanner = new Scanner(System.in);
 
-
-    private static void printError(String message) {
+    public void printError(String message) {
         System.out.println("\u001B[31m" + message + "\u001B[0m");
     }
 
-    private static void printGreenLine() {
+    public void printGreenLine() {
         System.out.println("\u001B[32m---------------------------------------------\u001B[0m");
     }
 
-    private static void printBlueText(String text) {
+    public void printBlueText(String text) {
         System.out.println("\u001B[36m" + text + "\u001B[0m");
     }
 
@@ -189,7 +188,7 @@ public class UserInterface {
         printBlueText("(1) House");
         printBlueText("(2) Apartment");
         printBlueText("(3) Land");
-        printBlueText("(0) Quit Program");
+        printBlueText("(0) Exit");
         printGreenLine();
         System.out.print("\u001B[36mChoose an option: \u001B[0m");
     }
