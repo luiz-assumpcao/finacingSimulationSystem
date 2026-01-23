@@ -20,6 +20,7 @@ public class Land extends Financing{
         this.zoneType = zoneType;
     }
 
+    // Lands receive a 2% increase on the financing calculation.
     @Override
     public Double calculateMonthlyPayment() {
         return super.calculateMonthlyPayment() + ((2.00 / 100.00) * super.calculateMonthlyPayment());
