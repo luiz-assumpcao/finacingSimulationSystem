@@ -1,6 +1,6 @@
 package model;
 
-public class Apartment extends Financing{
+public class Apartment extends Financing {
     private Integer parkingSpaces;
     private Integer floorLevel;
 
@@ -30,6 +30,7 @@ public class Apartment extends Financing{
         this.floorLevel = floorLevel;
     }
 
+    // Apartments receive a 4% discount on the financing calculation.
     @Override
     public Double calculateMonthlyPayment() {
         return super.calculateMonthlyPayment() - ((4.00 / 100.00) * super.calculateMonthlyPayment());

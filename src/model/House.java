@@ -38,6 +38,8 @@ public class House extends Financing {
         }
     }
 
+    // Houses receive a fixed increase of 80.00 in the financing calculation.
+    // The interest rate must not be less than the fixed increase.
     @Override
     public Double calculateMonthlyPayment() {
         double monthlyInterestRate = (this.annualInterestRate / 100) / 12.00;
