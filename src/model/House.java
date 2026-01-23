@@ -32,27 +32,30 @@ public class House extends Financing {
         this.builtArea = builtArea;
     }
 
-    public void isIncreaseGreaterThanInterest(double valueOfTheIncrease, double interestValue) throws IncreaseGreaterThanInterestException {
-        if (valueOfTheIncrease > interestValue) {
+    public void isIncreaseGreaterThanInterest(double increaseValue, double interestValue) throws IncreaseGreaterThanInterestException {
+        if (increaseValue > interestValue) {
             throw new IncreaseGreaterThanInterestException("The value of the increase is greater than the interest");
         }
     }
 
     @Override
     public Double calculateMonthlyPayment() {
-        double monthlyInterestRate = (this.annualInterestRate / 100) / 12;
+        double monthlyInterestRate = (this.annualInterestRate / 100) / 12.00;
         double financingTermInMonths = this.financingTerm * 12.00;
+        double monthlyPaymentWithoutInterest = this.propertyValue / financingTermInMonths;
 
-        double interestValue = (this.propertyValue / financingTermInMonths) * (1 + (monthlyInterestRate)) - (this.propertyValue / financingTermInMonths);
-        double valueOfTheIncrease = 80;
+        double interestValue = (this.propertyValue * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, financingTermInMonths)) /
+                (Math.pow(1 + monthlyInterestRate, financingTermInMonths) - 1) - monthlyPaymentWithoutInterest;
+
+        double increaseValue = 80;
 
         try {
-            isIncreaseGreaterThanInterest(valueOfTheIncrease, interestValue);
+            isIncreaseGreaterThanInterest(increaseValue, interestValue);
         } catch (IncreaseGreaterThanInterestException e) {
-            interestValue = valueOfTheIncrease;
+            interestValue = increaseValue;
         }
 
-        return (this.propertyValue / financingTermInMonths) * (1 + (monthlyInterestRate)) + valueOfTheIncrease;
+        return  monthlyPaymentWithoutInterest + interestValue + increaseValue;
     }
 
     @Override

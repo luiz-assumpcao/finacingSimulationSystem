@@ -32,10 +32,7 @@ public class Apartment extends Financing{
 
     @Override
     public Double calculateMonthlyPayment() {
-        double monthlyInterestRate = (this.annualInterestRate / 100) / 12.00;
-        double financingTermInMonths = this.financingTerm * 12.00;
-        return (this.propertyValue * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, financingTermInMonths)) /
-                (Math.pow(1 + monthlyInterestRate, financingTermInMonths) - 1);
+        return super.calculateMonthlyPayment() - ((4.00 / 100.00) * super.calculateMonthlyPayment());
     }
 
     @Override
