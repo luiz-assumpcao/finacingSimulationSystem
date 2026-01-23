@@ -42,7 +42,7 @@ public abstract class Financing {
     }
 
     public Double calculateMonthlyPayment() {
-        double monthlyInterestRate = (this.annualInterestRate / 100) / 12.00;
+        double monthlyInterestRate = Math.pow(((this.annualInterestRate / 100) + 1), (1.00 / 12.00)) - 1;
         double financingTermInMonths = this.financingTerm * 12.00;
         return (this.propertyValue * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, financingTermInMonths)) /
                 (Math.pow(1 + monthlyInterestRate, financingTermInMonths) - 1);

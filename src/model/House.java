@@ -42,7 +42,7 @@ public class House extends Financing {
     // The interest rate must not be less than the fixed increase.
     @Override
     public Double calculateMonthlyPayment() {
-        double monthlyInterestRate = (this.annualInterestRate / 100) / 12.00;
+        double monthlyInterestRate = Math.pow(((this.annualInterestRate / 100) + 1), (1.00 / 12.00)) - 1;
         double financingTermInMonths = this.financingTerm * 12.00;
         double monthlyPaymentWithoutInterest = this.propertyValue / financingTermInMonths;
 
