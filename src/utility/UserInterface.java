@@ -218,6 +218,33 @@ public class UserInterface {
         }
     }
 
+    public void displayListingPreferenceMenu() {
+        printGreenLine();
+        printBlueText("| Keep a record of the financings? |", true);
+        printGreenLine();
+        printBlueText("(1) Yes", true);
+        printBlueText("(2) No", true);
+        printGreenLine();
+        printBlueText("Choose an option: ");
+    }
+
+    public Boolean getUserListingPreference() {
+        while (true) {
+            try {
+                int userOption = Integer.parseInt(scanner.nextLine());
+                if (userOption < 1 || userOption > 2) {
+                    printError("This option is not available! Try again.");
+                    displayOptionsMenu();
+                    continue;
+                }
+                return userOption == 1;
+            } catch (NumberFormatException e) {
+                printError("Invalid value entered! Please try again.");
+                displayOptionsMenu();
+            }
+        }
+    }
+
     public Apartment createApartmentFinancing() {
         double propertyValue = getPropertyValue();
         int financingTerm = getFinancingTerm();
@@ -227,10 +254,10 @@ public class UserInterface {
         printGreenLine();
 
         return new Apartment(propertyValue,
-                            financingTerm,
-                            annualInterestRate,
-                            parkingSpaces,
-                            floorLevel);
+                financingTerm,
+                annualInterestRate,
+                parkingSpaces,
+                floorLevel);
     }
 
     public House createHouseFinancing() {
