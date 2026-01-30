@@ -12,6 +12,10 @@ public class Main {
         UserInterface userInterface = new UserInterface();
 
         boolean exit = false;
+
+        userInterface.displayListingPreferenceMenu();
+        boolean userPreference = userInterface.getUserListingPreference();
+        
         while (!exit) {
             userInterface.displayOptionsMenu();
             int userOption = userInterface.getUserFinancingOption();
@@ -21,13 +25,13 @@ public class Main {
                 exit = true;
                 continue;
             } else if (userOption == 1) {
-                House house = userInterface.createHouseFinancing();
+                Financing house = userInterface.createHouseFinancing();
                 System.out.println(house);
             } else if (userOption == 2) {
-                Apartment apartment = userInterface.createApartmentFinancing();
+                Financing apartment = userInterface.createApartmentFinancing();
                 System.out.println(apartment);
             } else if (userOption == 3) {
-                Land land = userInterface.createLandApartment();
+                Financing land = userInterface.createLandApartment();
                 System.out.println(land);
             }
 
