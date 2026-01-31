@@ -234,13 +234,13 @@ public class UserInterface {
                 int userOption = Integer.parseInt(scanner.nextLine());
                 if (userOption < 1 || userOption > 2) {
                     printError("This option is not available! Try again.");
-                    displayOptionsMenu();
+                    displayListingPreferenceMenu();
                     continue;
                 }
                 return userOption == 1;
             } catch (NumberFormatException e) {
                 printError("Invalid value entered! Please try again.");
-                displayOptionsMenu();
+                displayListingPreferenceMenu();
             }
         }
     }
