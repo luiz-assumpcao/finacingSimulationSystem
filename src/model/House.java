@@ -1,7 +1,5 @@
 package model;
 
-import utility.IncreaseGreaterThanInterestException;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -25,12 +23,6 @@ public class House extends Financing {
 
     public Double getBuiltArea() {
         return builtArea;
-    }
-
-    public void isIncreaseGreaterThanInterest(double increaseValue, double interestValue) throws IncreaseGreaterThanInterestException {
-        if (increaseValue > interestValue) {
-            throw new IncreaseGreaterThanInterestException("The value of the increase is greater than the interest");
-        }
     }
 
     // Houses receive a fixed increase of 80.00 in the financing calculation.
