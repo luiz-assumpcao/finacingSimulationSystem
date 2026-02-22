@@ -27,39 +27,20 @@ public class House extends Financing {
 
     // Houses receive a fixed increase of 80.00 in the financing calculation.
     // The interest rate must not be less than the fixed increase.
+    // If it is, the interest rate should increase to the same value as the fixed increase.
     @Override
-    public BigDecimal calculateMonthlyPayment() {
-        BigDecimal annualRateFraction = this.annualInterestRate.divide(BigDecimal.valueOf(100), Financing.CONTEXT);
-
-        if (annualRateFraction.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Interest rate must be greater than zero.");
-        }
-
-        BigDecimal increaseValue = new BigDecimal("80.00");
-
-        double monthlyRateDouble = Math.pow(annualRateFraction.add(BigDecimal.ONE).doubleValue(), 1.00 / 12.00) - 1;
-        BigDecimal monthlyRate = BigDecimal.valueOf(monthlyRateDouble);
-
+    protected BigDecimal calculateMonthlyPaymentRaw() {
         int financingTermInMonths = this.financingTerm * 12;
 
         BigDecimal monthlyPaymentWithoutInterest = this.propertyValue.divide(BigDecimal.valueOf(financingTermInMonths), Financing.CONTEXT);
 
-        BigDecimal factor = monthlyRate.add(BigDecimal.ONE, Financing.CONTEXT).pow(financingTermInMonths, Financing.CONTEXT);
+        BigDecimal interestValue = super.calculateMonthlyPaymentRaw().subtract(monthlyPaymentWithoutInterest, Financing.CONTEXT);
 
-        BigDecimal numerator = this.propertyValue.multiply(monthlyRate, Financing.CONTEXT).multiply(factor, Financing.CONTEXT);
-        BigDecimal denominator = factor.subtract(BigDecimal.ONE, Financing.CONTEXT);
+        BigDecimal increaseValue = new BigDecimal("80.00");
 
-        BigDecimal monthlyPaymentWithInterest = numerator.divide(denominator, Financing.CONTEXT);
+        interestValue = interestValue.max(increaseValue);
 
-        BigDecimal interestValue = monthlyPaymentWithInterest.subtract(monthlyPaymentWithoutInterest, Financing.CONTEXT);
-
-        if (interestValue.compareTo(increaseValue) < 0) {
-            interestValue = increaseValue;
-        }
-
-        BigDecimal monthlyPayment = monthlyPaymentWithoutInterest.add(interestValue, Financing.CONTEXT).add(increaseValue, Financing.CONTEXT);
-
-        return monthlyPayment.setScale(2, RoundingMode.HALF_UP);
+        return monthlyPaymentWithoutInterest.add(interestValue, Financing.CONTEXT).add(increaseValue, Financing.CONTEXT);
     }
 
     @Override

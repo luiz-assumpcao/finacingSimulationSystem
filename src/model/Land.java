@@ -24,8 +24,8 @@ public class Land extends Financing{
 
     // Lands receive a 2% increase on the financing calculation.
     @Override
-    public BigDecimal calculateMonthlyPayment() {
-        BigDecimal base = super.calculateMonthlyPayment();
+    protected BigDecimal calculateMonthlyPaymentRaw() {
+        BigDecimal base = super.calculateMonthlyPaymentRaw();
         BigDecimal increase = base.multiply(new BigDecimal("0.02"), Financing.CONTEXT);
         return base.add(increase, Financing.CONTEXT);
     }

@@ -1,6 +1,7 @@
 package model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Apartment extends Financing {
     private int parkingSpaces;
@@ -26,10 +27,10 @@ public class Apartment extends Financing {
 
     // Apartments receive a 4% discount on the financing calculation.
     @Override
-    public BigDecimal calculateMonthlyPayment() {
-        BigDecimal base = super.calculateMonthlyPayment();
-        BigDecimal increase = base.multiply(new BigDecimal("0.04"), Financing.CONTEXT);
-        return base.subtract(increase, Financing.CONTEXT);
+    protected BigDecimal calculateMonthlyPaymentRaw() {
+        BigDecimal base = super.calculateMonthlyPaymentRaw();
+        BigDecimal discount = base.multiply(new BigDecimal("0.04"), Financing.CONTEXT);
+        return base.subtract(discount, Financing.CONTEXT);
     }
 
     @Override

@@ -35,7 +35,7 @@ public abstract class Financing {
         return annualInterestRate;
     }
 
-    public BigDecimal calculateMonthlyPayment() {
+    protected BigDecimal calculateMonthlyPaymentRaw() {
         BigDecimal annualRateFraction = this.annualInterestRate.divide(BigDecimal.valueOf(100), CONTEXT);
 
         if (annualRateFraction.compareTo(BigDecimal.ZERO) <= 0) {
@@ -52,9 +52,11 @@ public abstract class Financing {
         BigDecimal numerator = this.propertyValue.multiply(monthlyRate, CONTEXT).multiply(factor, CONTEXT);
         BigDecimal denominator = factor.subtract(BigDecimal.ONE, CONTEXT);
 
-        BigDecimal monthlyPayment = numerator.divide(denominator, CONTEXT);
+        return numerator.divide(denominator, CONTEXT);
+    }
 
-        return monthlyPayment.setScale(2, RoundingMode.HALF_UP);
+    public BigDecimal calculateMonthlyPayment() {
+        return this.calculateMonthlyPaymentRaw().setScale(2, RoundingMode.HALF_UP);
     }
 
     public BigDecimal calculateTotalPayment() {
