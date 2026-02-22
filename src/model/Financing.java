@@ -1,55 +1,67 @@
 package model;
 
+import javax.swing.*;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Locale;
 
 public abstract class Financing {
-    protected Double propertyValue;
-    protected Integer financingTerm;
-    protected Double annualInterestRate;
+    protected BigDecimal propertyValue;
+    protected int financingTerm;
+    protected BigDecimal annualInterestRate;
+
+    protected static final MathContext CONTEXT = new MathContext(20, RoundingMode.HALF_UP);
 
     public Financing() {
     }
 
-    public Financing(Double propertyValue, Integer financingTerm, Double annualInterestRate) {
+    public Financing(BigDecimal propertyValue, int financingTerm, BigDecimal annualInterestRate) {
         this.propertyValue = propertyValue;
         this.financingTerm = financingTerm;
         this.annualInterestRate = annualInterestRate;
     }
 
-    public Double getPropertyValue() {
+    public BigDecimal getPropertyValue() {
         return propertyValue;
     }
 
-    public void setPropertyValue(Double propertyValue) {
-        this.propertyValue = propertyValue;
-    }
-
-    public Integer getFinancingTerm() {
+    public int getFinancingTerm() {
         return financingTerm;
     }
 
-    public void setFinancingTerm(Integer financingTerm) {
-        this.financingTerm = financingTerm;
-    }
-
-    public Double getAnnualInterestRate() {
+    public BigDecimal getAnnualInterestRate() {
         return annualInterestRate;
     }
 
-    public void setAnnualInterestRate(Double annualInterestRate) {
-        this.annualInterestRate = annualInterestRate;
+    protected BigDecimal calculateMonthlyPaymentRaw() {
+        BigDecimal annualRateFraction = this.annualInterestRate.divide(BigDecimal.valueOf(100), CONTEXT);
+
+        if (annualRateFraction.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Interest rate must be greater than zero.");
+        }
+
+        double monthlyRateDouble = Math.pow(annualRateFraction.add(BigDecimal.ONE).doubleValue(), 1.00 / 12.00) - 1;
+        BigDecimal monthlyRate = BigDecimal.valueOf(monthlyRateDouble);
+
+        int financingTermInMonths = this.financingTerm * 12;
+
+        BigDecimal factor = monthlyRate.add(BigDecimal.ONE, CONTEXT).pow(financingTermInMonths, CONTEXT);
+
+        BigDecimal numerator = this.propertyValue.multiply(monthlyRate, CONTEXT).multiply(factor, CONTEXT);
+        BigDecimal denominator = factor.subtract(BigDecimal.ONE, CONTEXT);
+
+        return numerator.divide(denominator, CONTEXT);
     }
 
-    public Double calculateMonthlyPayment() {
-        double monthlyInterestRate = Math.pow(((this.annualInterestRate / 100) + 1), (1.00 / 12.00)) - 1;
-        double financingTermInMonths = this.financingTerm * 12.00;
-        return (this.propertyValue * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, financingTermInMonths)) /
-                (Math.pow(1 + monthlyInterestRate, financingTermInMonths) - 1);
+    public BigDecimal calculateMonthlyPayment() {
+        return this.calculateMonthlyPaymentRaw().setScale(2, RoundingMode.HALF_UP);
     }
 
-    public Double calculateTotalPayment() {
-        return this.calculateMonthlyPayment() * this.financingTerm * 12;
+    public BigDecimal calculateTotalPayment() {
+        int months = this.financingTerm * 12;
+        return this.calculateMonthlyPayment().multiply(BigDecimal.valueOf(months));
     }
 
     @Override
