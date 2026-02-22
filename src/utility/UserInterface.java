@@ -4,10 +4,17 @@ import model.Apartment;
 import model.House;
 import model.Land;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Scanner;
 
 public class UserInterface {
-    Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
+
+    private static final BigDecimal ZERO = BigDecimal.ZERO;
+    private static final BigDecimal MIN_PROPERTY = new BigDecimal("10000.00");
+    private static final BigDecimal MAX_PROPERTY = new BigDecimal("600000000.00");
+    private static final BigDecimal MAX_RATE = new BigDecimal("500.00");
 
     public void printError(String message) {
         System.out.println("\u001B[31m" + message + "\u001B[0m");
@@ -29,29 +36,29 @@ public class UserInterface {
         }
     }
 
-    public Double getPropertyValue() {
+    public BigDecimal getPropertyValue() {
         while (true) {
             try {
                 printBlueText("Enter the property value: ");
-                double propertyValue = Double.parseDouble(scanner.nextLine());
-                if (propertyValue < 0.00) {
+                BigDecimal propertyValue = new BigDecimal(scanner.nextLine().strip());
+                if (propertyValue.compareTo(ZERO) < 0) {
                     printError("The value can't be negative! Try again.");
                     continue;
-                } else if (propertyValue < 30000.00) {
+                } else if (propertyValue.compareTo(MIN_PROPERTY) < 0) {
                     printError("The value can't be too low! Try again.");
                     continue;
-                } else if (propertyValue > 60000000.00) {
+                } else if (propertyValue.compareTo(MAX_PROPERTY) > 0) {
                     printError("The value can't be too high! Try again.");
                     continue;
                 }
-                return propertyValue;
+                return propertyValue.setScale(2, RoundingMode.HALF_UP);
             } catch (NumberFormatException e) {
                 printError("Invalid value entered! Please try again.");
             }
         }
     }
 
-    public Integer getFinancingTerm() {
+    public int getFinancingTerm() {
         while (true) {
             try {
                 printBlueText("Enter the financing term: ");
@@ -73,15 +80,15 @@ public class UserInterface {
         }
     }
 
-    public Double getAnnualInterestRate() {
+    public BigDecimal getAnnualInterestRate() {
         while (true) {
             try {
                 printBlueText("Enter the annual interest rate (%): ");
-                double annualInterestRate = Double.parseDouble(scanner.nextLine());
-                if (annualInterestRate < 0.00) {
+                BigDecimal annualInterestRate = new BigDecimal(scanner.nextLine().strip());
+                if (annualInterestRate.compareTo(ZERO) < 0) {
                     printError("The value can't be negative! Try again.");
                     continue;
-                } else if (annualInterestRate > 100.00) {
+                } else if (annualInterestRate.compareTo(MAX_RATE) > 0) {
                     printError("The value can't be too high! Try again.");
                     continue;
                 }
@@ -246,9 +253,9 @@ public class UserInterface {
     }
 
     public Apartment createApartmentFinancing() {
-        double propertyValue = getPropertyValue();
+        BigDecimal propertyValue = getPropertyValue();
         int financingTerm = getFinancingTerm();
-        double annualInterestRate = getAnnualInterestRate();
+        BigDecimal annualInterestRate = getAnnualInterestRate();
         int parkingSpaces = getParkingSpaces();
         int floorLevel = getFloorLevel();
         printGreenLine();
@@ -261,9 +268,9 @@ public class UserInterface {
     }
 
     public House createHouseFinancing() {
-        double propertyValue = getPropertyValue();
+        BigDecimal propertyValue = getPropertyValue();
         int financingTerm = getFinancingTerm();
-        double annualInterestRate = getAnnualInterestRate();
+        BigDecimal annualInterestRate = getAnnualInterestRate();
         double landArea = getLandArea();
         double builtArea = getBuiltArea(landArea);
         printGreenLine();
@@ -276,9 +283,9 @@ public class UserInterface {
     }
 
     public Land createLandApartment() {
-        double propertyValue = getPropertyValue();
+        BigDecimal propertyValue = getPropertyValue();
         int financingTerm = getFinancingTerm();
-        double annualInterestRate = getAnnualInterestRate();
+        BigDecimal annualInterestRate = getAnnualInterestRate();
         String zoneType = getZoneType();
         printGreenLine();
 

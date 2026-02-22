@@ -1,7 +1,6 @@
 package model;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class House extends Financing {
     private Double landArea;
