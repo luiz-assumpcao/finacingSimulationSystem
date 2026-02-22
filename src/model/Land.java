@@ -1,5 +1,7 @@
 package model;
 
+import java.math.BigDecimal;
+
 public class Land extends Financing{
     private String zoneType;
 
@@ -7,7 +9,7 @@ public class Land extends Financing{
         super();
     }
 
-    public Land(Double propertyValue, Integer financingTerm, Double annualInterestRate, String zoneType) {
+    public Land(BigDecimal propertyValue, Integer financingTerm, BigDecimal annualInterestRate, String zoneType) {
         super(propertyValue, financingTerm, annualInterestRate);
         this.zoneType = zoneType;
     }
@@ -22,8 +24,10 @@ public class Land extends Financing{
 
     // Lands receive a 2% increase on the financing calculation.
     @Override
-    public Double calculateMonthlyPayment() {
-        return super.calculateMonthlyPayment() + ((2.00 / 100.00) * super.calculateMonthlyPayment());
+    public BigDecimal calculateMonthlyPayment() {
+        BigDecimal base = super.calculateMonthlyPayment();
+        BigDecimal increase = base.multiply(new BigDecimal("0.02"), Financing.CONTEXT);
+        return base.add(increase, Financing.CONTEXT);
     }
 
     @Override

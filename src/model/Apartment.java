@@ -1,39 +1,35 @@
 package model;
 
+import java.math.BigDecimal;
+
 public class Apartment extends Financing {
-    private Integer parkingSpaces;
-    private Integer floorLevel;
+    private int parkingSpaces;
+    private int floorLevel;
 
     public Apartment() {
         super();
     }
 
-    public Apartment(Double propertyValue, Integer financingTerm, Double annualInterestRate, Integer parkingSpaces, Integer floorLevel) {
+    public Apartment(BigDecimal propertyValue, int financingTerm, BigDecimal annualInterestRate, int parkingSpaces, int floorLevel) {
         super(propertyValue, financingTerm, annualInterestRate);
         this.parkingSpaces = parkingSpaces;
         this.floorLevel = floorLevel;
     }
 
-    public Integer getParkingSpaces() {
+    public int getParkingSpaces() {
         return parkingSpaces;
     }
 
-    public void setParkingSpaces(Integer parkingSpaces) {
-        this.parkingSpaces = parkingSpaces;
-    }
-
-    public Integer getFloorLevel() {
+    public int getFloorLevel() {
         return floorLevel;
-    }
-
-    public void setFloorLevel(Integer floorLevel) {
-        this.floorLevel = floorLevel;
     }
 
     // Apartments receive a 4% discount on the financing calculation.
     @Override
-    public Double calculateMonthlyPayment() {
-        return super.calculateMonthlyPayment() - ((4.00 / 100.00) * super.calculateMonthlyPayment());
+    public BigDecimal calculateMonthlyPayment() {
+        BigDecimal base = super.calculateMonthlyPayment();
+        BigDecimal increase = base.multiply(new BigDecimal("0.04"), Financing.CONTEXT);
+        return base.subtract(increase, Financing.CONTEXT);
     }
 
     @Override
